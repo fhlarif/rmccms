@@ -9,5 +9,10 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $fillable = [
+        'title',
+        'content',
+        'category',
+    ];
+
 }

@@ -17,20 +17,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+Route::middleware('guest')->get('/guest', function () {
+    return view('guest');
+})->name('guest');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 
-Route::prefix('admin')->middleware(['auth'])->group(function(){
+Route::prefix('admin')->middleware(['auth:sanctum','verified'])->group(function(){
 
     Route::get('/dashboard',function(){
-            return view('dashboard');
-        })->name('dashboard');
+        return view('dashboard');
+    })->name('admin.dashboard');
 
-        Route::get('/pages',function(){
-            return view('admin.pages');
-        })->name('pages');
-        });
+    Route::get('/pages',function(){
+        return view('admin.pages');
+    })->name('admin.pages');
+});
 
-require __DIR__.'/auth.php';
